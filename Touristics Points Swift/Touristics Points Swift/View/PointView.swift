@@ -24,8 +24,10 @@ struct PointView: View {
             Text("POINT")
                 .font(.system(size: 40, weight: .black, design: .rounded))
                 .padding(.leading)
-            
-            List(pointsArray, id: \.id) { point in
+
+            List(pointsArray.filter({(p: PointViewModel) -> Bool in
+                return p.title.hasPrefix(searchText) || searchText == ""
+            }), id: \.id) { point in
                 PlaceRow(point: point, idP: point.id)
             }
             

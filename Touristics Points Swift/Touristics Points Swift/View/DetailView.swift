@@ -42,16 +42,17 @@ struct DetailPlace: View {
                     }
                     
                     Text(detail.address)
-                        .font(.title2)
+                        .font(.title3)
                         .multilineTextAlignment(.leading)
+                        .lineLimit(/*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                         .padding()
                     
                     HStack{
                         Image(systemName: "envelope.fill")
-                            .resizable(capInsets: EdgeInsets(top: 2.0, leading: 2.0, bottom: 2.0, trailing: 2.0))
+                            .resizable()
                             .foregroundColor(Color.blue)
-                            .frame(width:20.0, height: 20.0)
-                        Text(detail.email)                            .font(.title2)
+                            .frame(width:25.0, height: 20.0)
+                        Text(detail.email)                            .font(.title3)
                             .multilineTextAlignment(.leading)
                     }
                     
@@ -61,7 +62,7 @@ struct DetailPlace: View {
                             .foregroundColor(Color.blue)
                             .frame(width: 20, height: 20)
                         Text(detail.phone)
-                            .font(.title2)
+                            .font(.title3)
                             .multilineTextAlignment(.leading)
                     }
                     

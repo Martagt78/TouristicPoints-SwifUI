@@ -88,10 +88,10 @@
 		4613056926EB2F0700EF2E80 /* Touristics Points Swift */ = {
 			isa = PBXGroup;
 			children = (
-				46221F5D2701A8E100E4AF9B /* MyPersistentContainer.swift */,
-				460C323D26EF51C60024B698 /* DetailsViewModel.swift */,
-				460C323926EF2ADB0024B698 /* PointsViewModel.swift */,
 				4613056A26EB2F0700EF2E80 /* Touristics_Points_SwiftApp.swift */,
+				460C323926EF2ADB0024B698 /* PointsViewModel.swift */,
+				460C323D26EF51C60024B698 /* DetailsViewModel.swift */,
+				46221F5D2701A8E100E4AF9B /* MyPersistentContainer.swift */,
 				460C324226F4888A0024B698 /* Model */,
 				460C324126F0845C0024B698 /* View */,
 				4613056E26EB2F0800EF2E80 /* Assets.xcassets */,
