@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 
-struct DetailViewModel: Codable, Identifiable, Hashable {
+struct DetailViewModel: Identifiable, Hashable, Codable {
     
     let id: String
     let title: String
@@ -18,6 +18,9 @@ struct DetailViewModel: Codable, Identifiable, Hashable {
     let geocoordinates: String
     let description: String
     let phone: String
+    
+//    let latitude: Double
+//    let longitude: Double
     
 }
 

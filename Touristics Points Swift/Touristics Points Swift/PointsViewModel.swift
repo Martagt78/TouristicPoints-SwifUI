@@ -20,9 +20,6 @@ struct PointViewModel: Codable, Identifiable, Hashable {
     let id: String
     let title: String
     let geocoordinates: String
-//    let location: CLLocation
-//    private let regionRadius: CLLocationDistance = 1000
-//    let region: MKCoordinateRegion
     
 }
 

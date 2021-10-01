@@ -7,16 +7,25 @@
 
 
 import SwiftUI
-import MapKit
+import CoreData
 
 struct PointView: View {
     
     @State var pointsArray = [PointViewModel]()
+    
+    //SearchBar
     @State private var searchText = ""
     @State var searching = false
     @State private var idP = ""
     
-    //@State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275), span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
+    @FetchRequest(
+        entity: Point.entity(),
+        sortDescriptors: [
+            NSSortDescriptor(keyPath: \Point.title, ascending: true)
+        ]
+    ) var point: FetchedResults<Point>
+    
+    let delegate = UIApplication.shared.delegate as? AppDelegate
     
     var body: some View {
         VStack(alignment: .leading){
@@ -24,9 +33,9 @@ struct PointView: View {
             Text("POINT")
                 .font(.system(size: 40, weight: .black, design: .rounded))
                 .padding(.leading)
-
+            
             List(pointsArray.filter({(p: PointViewModel) -> Bool in
-                return p.title.hasPrefix(searchText) || searchText == ""
+                return p.title.hasPrefix(searchText) || searchText.isEmpty
             }), id: \.id) { point in
                 PlaceRow(point: point, idP: point.id)
             }
@@ -47,7 +56,6 @@ struct PointView: View {
     }
     
     func getPoint() {
-        
         let urlPOI = URL(string: "http://t21services.herokuapp.com/points")!
         var request = URLRequest(url: urlPOI)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -56,8 +64,19 @@ struct PointView: View {
             if let data = data {
                 if let points = try? JSONDecoder().decode(PointsViewModel.self, from: data) {
                     self.pointsArray = points.list
+                    if let appDelegate = self.delegate {
+                        appDelegate.clearDataPoint()
+                        DispatchQueue.main.async {
+                            for i in self.pointsArray {
+                                Point.createWith(id: i.id, title: i.title, geocoordinates: i.geocoordinates, using: MyPersistentContainer.persistentContainer.viewContext)
+                                MyPersistentContainer.saveContext()
+                                
+                            }
+                        }
+                    }
                 } else {
                     print("Invalid Response")
+                    self.refreshDataCore()
                 }
             } else if let error = error {
                 print("HTTP Request Failed \(error)")
@@ -66,6 +85,18 @@ struct PointView: View {
         task.resume()
     }
     
+    
+    func refreshDataCore() {
+       
+       // var pArray: [PointViewModel] = []
+        point.forEach { p in
+            print(point)
+            let item = PointViewModel(id: p.id, title: p.title, geocoordinates: p.geocoordinates)
+            //add item to intial array
+            self.pointsArray.append(item)
+            print(pointsArray)
+        }
+    }
 }
 
 struct PlaceRow: View {
@@ -97,7 +128,8 @@ struct PointView_Previews: PreviewProvider {
         
         PointView()
         
-        PlaceRow(point: point.init(id: "1", title: "Casa Batlló", geocoordinates: "41.391926,2.165208"), idP: "1")            .previewLayout(.sizeThatFits)
+        PlaceRow(point: point.init(id: "1", title: "Casa Batlló", geocoordinates: "41.391926,2.165208"), idP: "1")
+            .previewLayout(.sizeThatFits)
     }
 }
 

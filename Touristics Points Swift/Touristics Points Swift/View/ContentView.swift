@@ -9,8 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var pointsArray = [PointViewModel]()
-    
     var body: some View {
         NavigationView {
             GeometryReader { geo in
@@ -25,23 +23,35 @@ struct ContentView: View {
                     Text("BARCELONA")
                         .font(.system(size: 28, weight: .black, design: .rounded))
                         .fontWeight(.heavy)
+                        .lineLimit(/*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                         .multilineTextAlignment(.center)
-                        .padding([.leading, .bottom], 100.0)
-    
-                    NavigationLink(
-                        destination: PointView()) {
-                            Label(
-                                title: { Text("Points of Interest")
-                                        .foregroundColor(.black)
-                                        .fontWeight(.bold)
-                                        .multilineTextAlignment(.center)
-                                        .padding(.top) },
-                                icon: {
-                                    Image(systemName: "map.fill")
-                                        .foregroundColor(.black)
-                                }
-                            )
-                        }
+                        .frame(width: /*@START_MENU_TOKEN@*/200.0/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100.0/*@END_MENU_TOKEN@*/)
+                    
+                    Spacer()
+                    
+                    HStack{
+                        Spacer()
+                        NavigationLink(
+                            destination: PointView()) {
+                                
+                                Label(
+                                    title: { Text("Show Points")
+                                            .background(Color("LightGray"))
+                                            .foregroundColor(.black)
+                                            .font(.title2)
+                                    },
+                                    icon: {
+                                        Image(systemName: "map.fill")
+                                            .foregroundColor(.black)
+                                    }
+                                ).multilineTextAlignment(.center)
+                                    .padding(.bottom, 19.0)
+                                
+                            }
+                            
+                        Spacer()
+                    }
+                    Spacer()
                 }
             }
         }

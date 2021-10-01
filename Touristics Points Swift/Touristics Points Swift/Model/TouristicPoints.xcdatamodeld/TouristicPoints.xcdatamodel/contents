@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="20G165" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Details" representedClassName="Details" syncable="YES" codeGenerationType="class">
+    <entity name="Details" representedClassName="Details" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String"/>
         <attribute name="descriptionPlace" optional="YES" attributeType="String"/>
         <attribute name="email" optional="YES" attributeType="String"/>
@@ -9,14 +9,19 @@
         <attribute name="phone" optional="YES" attributeType="String"/>
         <attribute name="titleDetail" optional="YES" attributeType="String"/>
         <attribute name="transport" optional="YES" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="idDetail"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
-    <entity name="Point" representedClassName="Point" syncable="YES" codeGenerationType="class">
+    <entity name="Point" representedClassName="Point" syncable="YES">
         <attribute name="geocoordinates" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Point" positionX="-45" positionY="0" width="128" height="74"/>
         <element name="Details" positionX="-18" positionY="27" width="128" height="149"/>
+        <element name="Point" positionX="-45" positionY="0" width="128" height="74"/>
     </elements>
 </model>
