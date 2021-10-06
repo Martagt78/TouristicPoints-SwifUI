@@ -33,10 +33,8 @@ struct ContentView: View {
                         Spacer()
                         NavigationLink(
                             destination: PointView()) {
-                                
                                 Label(
                                     title: { Text("Show Points")
-                                            .background(Color("LightGray"))
                                             .foregroundColor(.black)
                                             .font(.title2)
                                     },
@@ -45,10 +43,8 @@ struct ContentView: View {
                                             .foregroundColor(.black)
                                     }
                                 ).multilineTextAlignment(.center)
-                                    .padding(.bottom, 19.0)
-                                
+                                    .padding(.bottom, 48.0)
                             }
-                            
                         Spacer()
                     }
                     Spacer()

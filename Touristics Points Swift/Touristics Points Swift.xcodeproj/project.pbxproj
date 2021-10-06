@@ -75,10 +75,10 @@
 			isa = PBXGroup;
 			children = (
 				46221F582701A63500E4AF9B /* TouristicPoints.xcdatamodeld */,
-				46E1FA9D2705A983006DC863 /* Details+CoreDataClass.swift */,
-				46E1FA9E2705A983006DC863 /* Details+CoreDataProperties.swift */,
 				46E1FA9F2705A983006DC863 /* Point+CoreDataClass.swift */,
 				46E1FAA02705A983006DC863 /* Point+CoreDataProperties.swift */,
+				46E1FA9D2705A983006DC863 /* Details+CoreDataClass.swift */,
+				46E1FA9E2705A983006DC863 /* Details+CoreDataProperties.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

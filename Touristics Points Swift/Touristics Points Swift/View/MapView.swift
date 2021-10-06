@@ -13,6 +13,7 @@ struct MapView: View {
     @State var pointDetail: DetailViewModel?
     
     //para representar la region que sea o la ciudad, hay que darle cllocation
+    
     @State var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(
             latitude: 41.391926,
@@ -22,8 +23,9 @@ struct MapView: View {
             longitudeDelta: 0.2))
     
     var body: some View {
-        let coordinates = pointDetail?.geocoordinates.split(separator: ",")
+       // coordinates.append(pointDetail?.geocoordinates.split(separator: ","));
         //convertir cada string de coordinates  a double y pasar como coordenadas.
+        
         
         Map(coordinateRegion: $region, interactionModes: [.all], showsUserLocation: true, userTrackingMode: nil).ignoresSafeArea(.all)
 //        VStack {

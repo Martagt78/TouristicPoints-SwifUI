@@ -23,7 +23,7 @@ struct PointView: View {
         sortDescriptors: [
             NSSortDescriptor(keyPath: \Point.title, ascending: true)
         ]
-    ) var point: FetchedResults<Point>
+    )var point: FetchedResults<Point>
     
     let delegate = UIApplication.shared.delegate as? AppDelegate
     
@@ -70,13 +70,12 @@ struct PointView: View {
                             for i in self.pointsArray {
                                 Point.createWith(id: i.id, title: i.title, geocoordinates: i.geocoordinates, using: MyPersistentContainer.persistentContainer.viewContext)
                                 MyPersistentContainer.saveContext()
-                                
                             }
                         }
                     }
                 } else {
                     print("Invalid Response")
-                    self.refreshDataCore()
+                    self.getPointFromCoreData()
                 }
             } else if let error = error {
                 print("HTTP Request Failed \(error)")
@@ -86,15 +85,11 @@ struct PointView: View {
     }
     
     
-    func refreshDataCore() {
-       
-       // var pArray: [PointViewModel] = []
+    func getPointFromCoreData() {
         point.forEach { p in
-            print(point)
             let item = PointViewModel(id: p.id, title: p.title, geocoordinates: p.geocoordinates)
             //add item to intial array
             self.pointsArray.append(item)
-            print(pointsArray)
         }
     }
 }
