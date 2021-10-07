@@ -100,8 +100,22 @@ struct DetailPlace: View {
     }
     
     func updateContext(dpoints: DetailViewModel) {
-        Details.createWith(id: dpoints.id, title: dpoints.title, geocoordinates: dpoints.geocoordinates, address: dpoints.address, description: dpoints.description, email: dpoints.email, phone: dpoints.phone, transport: dpoints.transport, using: MyPersistentContainer.persistentContainer.viewContext)
-        MyPersistentContainer.saveContext()
+        print(DetailObject(id: idP).detail)
+        if DetailObject(id: idP).detail.count > 0 {
+            if let managedObject = DetailObject(id: idP).detail[0] as? Details {
+                managedObject.titleDetail = dpoints.title
+                managedObject.geocoordinatesDetail = dpoints.geocoordinates
+                managedObject.address = dpoints.address
+                managedObject.descriptionPlace = dpoints.description
+                managedObject.email = dpoints.email
+                managedObject.transport = dpoints.transport
+                MyPersistentContainer.saveContext()
+            }
+        } else {
+            Details.createWith(id: dpoints.id, title: dpoints.title, geocoordinates: dpoints.geocoordinates, address: dpoints.address, description: dpoints.description, email: dpoints.email, phone: dpoints.phone, transport: dpoints.transport, using: MyPersistentContainer.persistentContainer.viewContext)
+            MyPersistentContainer.saveContext()
+        }
+        pointDetail = dpoints
     }
     
     func getDetailFromCoreData() {
@@ -109,9 +123,9 @@ struct DetailPlace: View {
             let item = DetailViewModel(id: managedObject.idDetail, title: managedObject.titleDetail, address: managedObject.address, transport: managedObject.transport, email: managedObject.email, geocoordinates: managedObject.geocoordinatesDetail, description: managedObject.descriptionPlace, phone: managedObject.phone)
             self.pointDetail = item
         }
-        //print(DetailObject(id: idP).detail[0])
     }
 }
+
 
 struct DetailObject<Details: NSManagedObject>: View {
     
@@ -119,7 +133,9 @@ struct DetailObject<Details: NSManagedObject>: View {
     var detail: FetchedResults<Details> { fetchRequest.wrappedValue }
     
     init(id: String) {
-        fetchRequest = FetchRequest(entity: Details.entity(), sortDescriptors: [], predicate: NSPredicate(format: "idDetail == %@", id))
+        fetchRequest = FetchRequest(entity: Details.entity(),
+                                    sortDescriptors:[],
+                                    predicate: NSPredicate(format: "idDetail == %@", id))
     }
     
     var body: some View {
