@@ -13,24 +13,27 @@ struct DetailView: View {
     @Binding var idP: String
     
     var body: some View {
-        
-        DetailPlace(idP: $idP)
+        DetailPlace(id: idP)
     }
 }
-
-
 
 struct DetailPlace: View {
     
     @State var pointDetail: DetailViewModel?
-    @Binding var idP: String
+    var idP: String
+    let delegate = UIApplication.shared.delegate as? AppDelegate
+    var fetchRequest: FetchRequest<Details>
     
+    init(id: String) {
+        fetchRequest = FetchRequest<Details>(entity: Details.entity(), sortDescriptors: [], predicate: NSPredicate(format: "idDetail == %@", id))
+        self.idP = id
+    }
     
     var body: some View {
         ScrollView {
             VStack {
                 if let detail = pointDetail{
-                    
+
                     Text(detail.title)
                         .font(.title)
                         .multilineTextAlignment(.center)
@@ -79,7 +82,7 @@ struct DetailPlace: View {
     
     func getDetailPoint() {
         
-        let urlDetailPOI = URL(string: "http://t21services.herokuapp.com/points/\(idP)")! //Pasar ID que queremos mostrar
+        let urlDetailPOI = URL(string: "http://t21services.herokuapp.com/poits/\(idP)")! //Pasar ID que queremos mostrar
         var request = URLRequest(url: urlDetailPOI)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
@@ -94,62 +97,37 @@ struct DetailPlace: View {
             } else if let error = error {
                 print("HTTP Request Failed \(error)")
             }
-            
         }
         task.resume()
     }
     
     func updateContext(dpoints: DetailViewModel) {
-        print(DetailObject(id: idP).detail)
-        if DetailObject(id: idP).detail.count > 0 {
-            if let managedObject = DetailObject(id: idP).detail[0] as? Details {
-                managedObject.titleDetail = dpoints.title
-                managedObject.geocoordinatesDetail = dpoints.geocoordinates
-                managedObject.address = dpoints.address
-                managedObject.descriptionPlace = dpoints.description
-                managedObject.email = dpoints.email
-                managedObject.transport = dpoints.transport
-                MyPersistentContainer.saveContext()
-            }
-        } else {
+        if fetchRequest.wrappedValue.isEmpty {
             Details.createWith(id: dpoints.id, title: dpoints.title, geocoordinates: dpoints.geocoordinates, address: dpoints.address, description: dpoints.description, email: dpoints.email, phone: dpoints.phone, transport: dpoints.transport, using: MyPersistentContainer.persistentContainer.viewContext)
+        } else {
+            let managedObject = fetchRequest.wrappedValue[0]
+            managedObject.titleDetail = dpoints.title
+            managedObject.geocoordinatesDetail = dpoints.geocoordinates
+            managedObject.address = dpoints.address
+            managedObject.descriptionPlace = dpoints.description
+            managedObject.email = dpoints.email
+            managedObject.transport = dpoints.transport
             MyPersistentContainer.saveContext()
         }
-        pointDetail = dpoints
+        self.pointDetail = dpoints
     }
     
     func getDetailFromCoreData() {
-        if let managedObject = DetailObject(id: idP).detail[0] as? Details {
-            let item = DetailViewModel(id: managedObject.idDetail, title: managedObject.titleDetail, address: managedObject.address, transport: managedObject.transport, email: managedObject.email, geocoordinates: managedObject.geocoordinatesDetail, description: managedObject.descriptionPlace, phone: managedObject.phone)
-            self.pointDetail = item
-        }
+        let managedObject = fetchRequest.wrappedValue[0]
+        let item = DetailViewModel(id: managedObject.idDetail, title: managedObject.titleDetail, address: managedObject.address, transport: managedObject.transport, email: managedObject.email, geocoordinates: managedObject.geocoordinatesDetail, description: managedObject.descriptionPlace, phone: managedObject.phone)
+        self.pointDetail = item
     }
 }
-
-
-struct DetailObject<Details: NSManagedObject>: View {
-    
-    var fetchRequest: FetchRequest<Details>
-    var detail: FetchedResults<Details> { fetchRequest.wrappedValue }
-    
-    init(id: String) {
-        fetchRequest = FetchRequest(entity: Details.entity(),
-                                    sortDescriptors:[],
-                                    predicate: NSPredicate(format: "idDetail == %@", id))
-    }
-    
-    var body: some View {
-        HStack{
-            
-        }
-    }
-}
-
 
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
         
-        DetailPlace(idP: .constant("1"))
+        DetailPlace(id: "1")
             .previewLayout(.sizeThatFits)
     }
 }

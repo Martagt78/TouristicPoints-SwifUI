@@ -21,7 +21,7 @@ struct PointView: View {
     @FetchRequest(
         entity: Point.entity(),
         sortDescriptors: [
-            NSSortDescriptor(keyPath: \Point.title, ascending: true)
+            NSSortDescriptor(keyPath: \Point.title , ascending: true)
         ]
     )var point: FetchedResults<Point>
     
@@ -64,6 +64,7 @@ struct PointView: View {
             if let data = data {
                 if let points = try? JSONDecoder().decode(PointsViewModel.self, from: data) {
                     self.pointsArray = points.list
+                    print(pointsArray)
                     if let appDelegate = self.delegate {
                         appDelegate.clearDataPoint()
                         DispatchQueue.main.async {
