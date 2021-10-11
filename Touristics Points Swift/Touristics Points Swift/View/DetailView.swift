@@ -40,8 +40,8 @@ struct DetailPlace: View {
                         .lineLimit(/*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
                         .frame(maxHeight: .infinity)
                     
-                    VStack{
-                        MapView(pointDetail: pointDetail)
+                    VStack {
+                        MapView()
                             .frame(height: 300)
                     }
                     
@@ -82,7 +82,7 @@ struct DetailPlace: View {
     
     func getDetailPoint() {
         
-        let urlDetailPOI = URL(string: "http://t21services.herokuapp.com/poits/\(idP)")! //Pasar ID que queremos mostrar
+        let urlDetailPOI = URL(string: "http://t21services.herokuapp.com/points/\(idP)")! //Pasar ID que queremos mostrar
         var request = URLRequest(url: urlDetailPOI)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         

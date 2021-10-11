@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import MapKit
 
 struct DetailViewModel: Identifiable, Hashable, Codable {
     
@@ -19,8 +18,7 @@ struct DetailViewModel: Identifiable, Hashable, Codable {
     let description: String
     let phone: String
     
-//    let latitude: Double
-//    let longitude: Double
     
 }
 
+//Hacer extension que le entre string y dentro de extension hacer split

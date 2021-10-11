@@ -9,8 +9,6 @@ import CoreData
 
 
 public class MyPersistentContainer {
-  //  static let shared = MyPersistentContainer()
-    
     public static var context: NSManagedObjectContext {
         return persistentContainer.viewContext
     }

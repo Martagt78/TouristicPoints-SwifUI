@@ -101,7 +101,6 @@ struct PlaceRow: View {
     @State var idP: String
     
     var body: some View {
-        
         NavigationLink(
             destination: DetailView(idP: $idP)) {
                 VStack(alignment: .leading) {
