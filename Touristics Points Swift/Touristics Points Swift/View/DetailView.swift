@@ -41,7 +41,7 @@ struct DetailPlace: View {
                         .frame(maxHeight: .infinity)
                     
                     VStack {
-                        MapView()
+                        MapView(pointDetail: pointDetail)
                             .frame(height: 300)
                     }
                     

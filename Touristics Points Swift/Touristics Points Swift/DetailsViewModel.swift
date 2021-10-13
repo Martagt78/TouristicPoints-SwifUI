@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct DetailViewModel: Identifiable, Hashable, Codable {
-    
+struct DetailViewModel: Identifiable, Hashable, Codable, Equatable {
+
     let id: String
     let title: String
     let address: String
@@ -18,7 +18,5 @@ struct DetailViewModel: Identifiable, Hashable, Codable {
     let description: String
     let phone: String
     
-    
 }
 
-//Hacer extension que le entre string y dentro de extension hacer split
